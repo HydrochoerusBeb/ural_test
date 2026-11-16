@@ -9,18 +9,17 @@ export class PriceError extends Error {
 }
 
 const CONFIG_MESSAGE = "Не задан ключ покупателя: укажите customerKey в src/apiConfig.js";
-const ENDPOINT_MESSAGE = "Некорректный endpoint в src/apiConfig.js";
 const NETWORK_MESSAGE = "Не удалось связаться с сервером. Проверьте соединение и повторите запрос.";
 const BAD_RESPONSE_MESSAGE = "Сервер вернул некорректный ответ.";
 
 export function buildPriceUrl({ number, brand, analogues }) {
-  const url = new URL(apiConfig.endpoint);
+  const params = new URLSearchParams();
   const key = typeof apiConfig.customerKey === "string" ? apiConfig.customerKey.trim() : "";
-  if (key) url.searchParams.set("key", key);
-  url.searchParams.set("number", number);
-  if (brand) url.searchParams.set("brand", brand);
-  if (brand && analogues) url.searchParams.set("analogues", "on");
-  return url;
+  if (key) params.set("key", key);
+  params.set("number", number);
+  if (brand) params.set("brand", brand);
+  if (brand && analogues) params.set("analogues", "on");
+  return "/api/price?" + params.toString();
 }
 
 export function errorMessage(data) {
@@ -132,12 +131,7 @@ export async function loadGoods(params, signal) {
   if (!hasCustomerKey()) {
     throw new PriceError("config", CONFIG_MESSAGE);
   }
-  let url;
-  try {
-    url = buildPriceUrl(params);
-  } catch {
-    throw new PriceError("config", ENDPOINT_MESSAGE);
-  }
+  const url = buildPriceUrl(params);
   let response;
   try {
     response = await fetch(url, {

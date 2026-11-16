@@ -1,5 +1,4 @@
 const apiConfig = {
-  endpoint: "http://api.favorit-parts.ru/hs/hsprice/",
   customerKey: "00000000-0000-0000-0000-000000000001",
 };
 
