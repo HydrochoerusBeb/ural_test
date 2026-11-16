@@ -1,0 +1,35 @@
+body {
+  background-color: #f3f5f7;
+}
+
+.brand-scroll {
+  max-height: 22rem;
+  overflow: auto;
+}
+
+.offers-scroll {
+  max-height: 32rem;
+}
+
+.offers-table {
+  min-width: 52rem;
+}
+
+.table.offers-table > thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+}
+
+.offers-table td,
+.offers-table th {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.offers-table .name-cell {
+  min-width: 16rem;
+  max-width: 26rem;
+  white-space: normal;
+}
